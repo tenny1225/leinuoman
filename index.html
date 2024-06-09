@@ -2,6 +2,8 @@
 
 <head>
     <title>桃嘿嘿占卜</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <style type="text/css">
         #bbody {
             width: 100%;
@@ -21,7 +23,8 @@
             <button onclick="xipai()" id="xipai">重新洗牌</button>&nbsp;&nbsp;&nbsp;
             <button onclick="ok(1)" id="ok">线性</button>&nbsp;&nbsp;&nbsp;
             <button onclick="ok(3)" id="ok">H阵(7)</button>&nbsp;&nbsp;&nbsp;
-            <button onclick="ok(2)" id="ok">十字(5)</button>
+            <button onclick="ok(2)" id="ok">十字(5)</button>&nbsp;&nbsp;&nbsp;
+            <button onclick="ok(4)" id="ok">九宫格(9)</button>
         </div>
     </center>
 
@@ -63,7 +66,7 @@
                 td.style.cursor = "pointer";
                 let id = j + 1 + i * 6;
                 if (id < 10) id = "0" + id;
-                td.innerHTML = "<div style='height:89px;width:57px;border-radius:4px;background-color:#e3e3e3;line-height:89px;'>" + id + "</div>"
+                td.innerHTML = "<div style='height:89px;width:57px;border-radius:4px;background-color:#bca58b;line-height:89px;'>" + id + "</div>"
                 td.addEventListener("click", function () {
                     td.style.transform = "scale(0,1)";
                     td.style.transitionDuration = "0.3s";
@@ -160,6 +163,27 @@
                         index = 6;
                     }
 
+                    let td = document.createElement("td");
+                    td.style.verticalAlign = "middle";
+                    td.style.height = "178px";
+                    td.style.width = "114px";
+                    td.style.cursor = "pointer";
+                    td.innerHTML = "<img src='A-Qia-Xi-Zhi-Yan_Lei-Nuo-Man_" + data[index] + ".png' style='height:178px;width:114px'>"
+                    td.style.textAlign = "center";
+                    if (index == -1) {
+                        td.innerHTML = "<div style='height:178px;width:114px'></div>"
+
+                    }
+                    tr.appendChild(td)
+                }
+                tb.appendChild(tr);
+            }
+
+        } else if (v == 4 && data.length == 9) {
+            for (let i = 0; i < 3; i++) {
+                let tr = document.createElement("tr")
+                for (let j = 0; j < 3; j++) {
+                    let index = j+i*3;
                     let td = document.createElement("td");
                     td.style.verticalAlign = "middle";
                     td.style.height = "178px";
