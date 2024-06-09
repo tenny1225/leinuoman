@@ -1,8 +1,18 @@
 <html>
 
-<head></head>
+<head>
+    <title>桃嘿嘿占卜</title>
+    <style type="text/css">
+        #bbody {
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" ><text transform="rotate(30, 20, 40)" x="50" y="50" font-size="20" fill="rgb(210,210,210)" >桃嘿嘿</text></svg>');
+            background-repeat: repeat;
+        }
+    </style>
+</head>
 
-<body style="user-select: none;">
+<body id="bbody">
     <center>
         <table id="tb" cellpadding="4">
         </table>
@@ -16,6 +26,7 @@
     </center>
 
 </body>
+
 <script>
     let selected = [];
     window.onload = function () {
@@ -128,7 +139,7 @@
 
 
         } else if (v == 3 && data.length == 7) {
-           
+
             for (let i = 0; i < 3; i++) {
                 let tr = document.createElement("tr")
                 for (let j = 0; j < 3; j++) {
@@ -164,10 +175,10 @@
                 }
                 tb.appendChild(tr);
             }
-           
+
         }
 
-        
+
     }
 </script>
 
