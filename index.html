@@ -43,7 +43,7 @@
             xipai();
             return;
         }
-        document.getElementById("tb2").innerHTML="<span>正在加载："+(i*100/48)+"%</span>";
+        document.getElementById("tb2").innerHTML="<span>正在加载："+(i*100/48).toFixed(1)+"%</span>";
         let id = i;
         if (i < 10) id = "0" + i;
         let img = new Image();
