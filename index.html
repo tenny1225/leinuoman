@@ -37,8 +37,8 @@
         <div>
             <button onclick="xipai()" id="xipai" class="btn">重新洗牌</button>&nbsp;&nbsp;&nbsp;
             <button onclick="ok(1)" id="ok"  class="btn">线性</button>&nbsp;&nbsp;&nbsp;
-            <button onclick="ok(3)" id="ok"  class="btn">H阵(7)</button>&nbsp;&nbsp;&nbsp;
             <button onclick="ok(2)" id="ok"  class="btn">十字(5)</button>&nbsp;&nbsp;&nbsp;
+            <button onclick="ok(3)" id="ok"  class="btn">H阵(7)</button>&nbsp;&nbsp;&nbsp;
             <button onclick="ok(4)" id="ok"  class="btn">九宫格(9)</button>
         </div>
     </center>
@@ -71,7 +71,7 @@
         let tb = document.querySelector("#tb");
         tb.innerHTML = "";
         let data = [];
-        for (let i = 1; i <= 48; i++) {
+        for (let i = 1; i <= 36; i++) {
             if (i < 10) {
                 data.push("0" + i)
             } else {
@@ -81,7 +81,7 @@
         data.sort(function (a, b) {
             return Math.random() - 0.45;
         })
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < 6; i++) {
             let tr = document.createElement("tr")
             for (let j = 0; j < 6; j++) {
                 let td = document.createElement("td");
