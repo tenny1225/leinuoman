@@ -3,7 +3,7 @@
 <head>
     <title>桃嘿嘿占卜</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <style type="text/css">
         #bbody {
             width: 100%;
@@ -18,6 +18,7 @@
     <center>
         <table id="tb" cellpadding="4">
         </table>
+        <div id="tb2">正在加载...</div>
         <br><br>
         <div>
             <button onclick="xipai()" id="xipai">重新洗牌</button>&nbsp;&nbsp;&nbsp;
@@ -33,14 +34,24 @@
 <script>
     let selected = [];
     window.onload = function () {
-        for (let i = 1; i <= 36; i++) {
-            let id = i;
-            if (i < 10) id = "0" + i;
-            let img = new Image();
-            img.src = 'A-Qia-Xi-Zhi-Yan_Lei-Nuo-Man_' + id + '.png';
-        }
-        xipai();
+        load(1);
+
     };
+    function load(i) {
+        if (i > 48) {
+            document.getElementById("tb2").style.display = "none";
+            xipai();
+            return;
+        }
+        document.getElementById("tb2").value="正在加载："+(i*100/48)+"%";
+        let id = i;
+        if (i < 10) id = "0" + i;
+        let img = new Image();
+        img.src = 'A-Qia-Xi-Zhi-Yan_Lei-Nuo-Man_' + id + '.png';
+        img.onload = function () {
+            load(i + 1)
+        }
+    }
     function xipai() {
         selected = [];
         let tb = document.querySelector("#tb");
@@ -56,7 +67,7 @@
         data.sort(function (a, b) {
             return Math.random() - 0.45;
         })
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < 8; i++) {
             let tr = document.createElement("tr")
             for (let j = 0; j < 6; j++) {
                 let td = document.createElement("td");
@@ -72,7 +83,7 @@
                     td.style.transitionDuration = "0.3s";
                     selected.push(data[j + i * 6]);
                     setTimeout(() => {
-                        td.innerHTML = "<img src='A-Qia-Xi-Zhi-Yan_Lei-Nuo-Man_" + data[j + i * 6] + ".png' style='height:89px;width:57px'>"
+                        td.innerHTML = "<img src='A-Qia-Xi-Zhi-Yan_Lei-Nuo-Man_" + id + ".png' style='height:89px;width:57px'>"
                         td.style.transform = "scale(1,1)";
                         td.style.transitionDuration = "0.3s";
                         td.removeEventListener("click");
@@ -183,7 +194,7 @@
             for (let i = 0; i < 3; i++) {
                 let tr = document.createElement("tr")
                 for (let j = 0; j < 3; j++) {
-                    let index = j+i*3;
+                    let index = j + i * 3;
                     let td = document.createElement("td");
                     td.style.verticalAlign = "middle";
                     td.style.height = "178px";
