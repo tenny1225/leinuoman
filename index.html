@@ -16,13 +16,18 @@
             
         }
         .btn{
-            border-radius: 3px;
-           outline: none;
+           
+            outline: none;
+            background: none;
+            border: none;
             background-color: #bca58b;
             padding:6px;
             color:#14151a;
             font-weight:blod;
            
+        }
+        .btn:active{
+            background-color: #5a4b3a;
         }
     </style>
 </head>
@@ -35,11 +40,14 @@
         <div id="tb2" style="color:#f1f3f5">正在加载...</div>
         <br><br>
         <div>
-            <button onclick="xipai()" id="xipai" class="btn">重新洗牌</button>&nbsp;&nbsp;&nbsp;
-            <button onclick="ok(1)" id="ok"  class="btn">线性</button>&nbsp;&nbsp;&nbsp;
+       
+            <button onclick="ok(1)" id="ok"  class="btn">线性(3)</button>&nbsp;&nbsp;&nbsp;
             <button onclick="ok(2)" id="ok"  class="btn">十字(5)</button>&nbsp;&nbsp;&nbsp;
             <button onclick="ok(3)" id="ok"  class="btn">H阵(7)</button>&nbsp;&nbsp;&nbsp;
             <button onclick="ok(4)" id="ok"  class="btn">九宫格(9)</button>
+            <br><br>
+            <button onclick="xipai(0)" id="xipai" class="btn reset">重新洗牌</button>&nbsp;&nbsp;&nbsp;
+            <button onclick="xipai(1)" id="xipai" class="btn reset">顺序查看</button>
         </div>
     </center>
 
@@ -55,7 +63,7 @@
     function load(i) {
         if (i > 36) {
             document.getElementById("tb2").style.display = "none";
-            xipai();
+            xipai(0);
             return;
         }
         document.getElementById("tb2").innerHTML="<span>正在加载："+(i*100/36).toFixed(1)+"%</span>";
@@ -67,7 +75,7 @@
             load(i + 1)
         }
     }
-    function xipai() {
+    function xipai(v) {
         selected = [];
         let tb = document.querySelector("#tb");
         tb.innerHTML = "";
@@ -79,9 +87,12 @@
                 data.push(i)
             }
         }
-        data.sort(function (a, b) {
+        if(v==0){
+            data.sort(function (a, b) {
             return Math.random() - 0.45;
         })
+        }
+        
         for (let i = 0; i < 6; i++) {
             let tr = document.createElement("tr")
             for (let j = 0; j < 6; j++) {
@@ -91,8 +102,9 @@
                 let index =  j + 1 + i * 6
                 let id =index;
                 if (id < 10) id = "0" + id;
-                td.innerHTML = "<div style='box-shadow:2px 0px 0px #999999;height:44.5px;width:28.5px;border-radius:3px;background-color:#bca58b;line-height:44.5px;'>" + id + "</div>"
-                td.addEventListener("click", function () {
+                if(v==0){
+                    td.innerHTML = "<div style='box-shadow:2px 0px 0px #999999;height:44.5px;width:28.5px;border-radius:3px;background-color:#bca58b;line-height:44.5px;'>" + id + "</div>"
+                    td.addEventListener("click", function () {
                     td.style.transform = "scale(0,1)";
                     td.style.transitionDuration = "0.3s";
                     selected.push(data[index-1]);
@@ -100,16 +112,31 @@
                         td.innerHTML = "<img src='" + data[index-1] + ".jpg' style='height:44.5px;width:28.5px;border-radius:3px;' alt='"+names[parseInt(data[index-1])-1]+"'>"
                         td.style.transform = "scale(1,1)";
                         td.style.transitionDuration = "0.3s";
-                        td.removeEventListener("click");
                     }, 300);
+                    td.removeEventListener("click",this);
                 });
+                }else{
+                    td.innerHTML = "<img src='" + data[index-1] + ".jpg' style='height:44.5px;width:28.5px;border-radius:3px;' alt='"+names[parseInt(data[index-1])-1]+"'>"
+                }
+                
                 td.style.textAlign = "center";
                 tr.appendChild(td);
             }
             tb.appendChild(tr);
         }
+        for(let i of  document.querySelectorAll(".btn")){
+            i.style.display="inline-block";
+        }
+      
+       
     }
     function ok(v) {
+        for(let i of  document.querySelectorAll(".btn")){
+            i.style.display="none";
+        }
+        for(let i of  document.querySelectorAll(".reset")){
+            i.style.display="inline-block";
+        }
 
         let data = [].concat(selected);
         selected = [];
