@@ -41,7 +41,7 @@
 <body id="bbody" style="overflow-x: hidden;">
     <div
         id="bar"
-        style="transform-origin: 0 0;height:45px;position: fixed;top:0px;left:0;right:0;background-color: #bca58b;line-height: 45px;padding-left:8px;color:#14151a;font-weight: bold;text-align:center;">
+        style="z-index:100;transform-origin: 0 0;height:45px;position: fixed;top:0px;left:0;right:0;background-color: #bca58b;line-height: 45px;padding-left:8px;color:#14151a;font-weight: bold;text-align:center;">
         桃嘿嘿✩雷诺曼牌</div>
     <center style="margin-top: 50px;">
         <table id="tb" cellpadding="4" style="color:#f1f3f5;transform-origin: 0 0;">
@@ -64,6 +64,7 @@
 
 <script>
     let selected = [];
+    let data = [];
     let names = ["骑士", "四叶草", "船", "房子", "树", "云", "蛇", "棺材", "花束", "镰刀", "鞭子", "鸟", "小孩", "狐狸", "熊", "星辰", "鹳", "狗", "高塔", "花园", "群山", "道路", "老鼠", "爱心", "指环", "书本", "信件", "男", "女", "百合花", "太阳", "月亮", "钥匙", "鱼", "锚", "十字架"]
     window.onload = function () {
         load(1);

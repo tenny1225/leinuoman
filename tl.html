@@ -41,7 +41,7 @@
 <body id="bbody" style="overflow-x: hidden;">
     <div
         id="bar"
-        style="transform-origin: 0 0;height:45px;position: fixed;top:0px;left:0;right:0;background-color: #bca58b;line-height: 45px;padding-left:8px;color:#14151a;font-weight: bold;text-align:center;">
+        style="z-index:100;transform-origin: 0 0;height:45px;position: fixed;top:0px;left:0;right:0;background-color: #bca58b;line-height: 45px;padding-left:8px;color:#14151a;font-weight: bold;text-align:center;">
         桃嘿嘿✩塔罗牌</div>
     <center style="margin-top: 50px;">
         <table id="tb" cellpadding="4" style="color:#f1f3f5;transform-origin: 0 0;">
@@ -64,21 +64,70 @@
 
 <script>
     let selected = [];
-    let names = ["骑士", "四叶草", "船", "房子", "树", "云", "蛇", "棺材", "花束", "镰刀", "鞭子", "鸟", "小孩", "狐狸", "熊", "星辰", "鹳", "狗", "高塔", "花园", "群山", "道路", "老鼠", "爱心", "指环", "书本", "信件", "男", "女", "百合花", "太阳", "月亮", "钥匙", "鱼", "锚", "十字架"]
+    let tl =[];
+    let map = [];
+    let names = ["愚者", "魔术师", "女祭司", "女皇", "皇帝", "教皇", "恋人", "战车", "力量", "隐者", "命运之轮", "正义", "倒吊人", "死神", "节制", "恶魔", "塔", "星星", "月亮", "太阳", "审判", "世界"]
     window.onload = function () {
-        load(1);
+        for(let i=0;i<22;i++){
+            let key = i;
+            if (i < 10) {
+                key = "0"+key;
+            }
+            tl.push("maj"+key);
+            map[tl[tl.length-1]]=names[i];
+        }
+        for(let i=1;i<=14;i++){
+            let key = i;
+            if (i < 10) {
+                key = "0"+key;
+            }
+            tl.push("cups"+key);
+            tl.push("pents"+key);
+            tl.push("swords"+key);
+            tl.push("wands"+key);
+            if( i<=10){
+                names.push("圣杯"+key);
+                names.push("星币"+key);
+                names.push("宝剑"+key);
+                names.push("权杖"+key);
+            }else if(i==11){
+                names.push("圣杯侍从");
+                names.push("星币侍从");
+                names.push("宝剑侍从");
+                names.push("权杖侍从");
+            }else if(i==12){
+                names.push("圣杯骑士");
+                names.push("星币骑士");
+                names.push("宝剑骑士");
+                names.push("权杖骑士");
+            }else if(i==13){
+                names.push("圣杯皇后");
+                names.push("星币皇后");
+                names.push("宝剑皇后");
+                names.push("权杖皇后");
+            }else if(i==14){
+                names.push("圣杯皇帝");
+                names.push("星币皇帝");
+                names.push("宝剑皇帝");
+                names.push("权杖皇帝");
+            }
+            map[tl[tl.length-1]]=names[tl.length-1];
+            map[tl[tl.length-2]]=names[tl.length-2];
+            map[tl[tl.length-3]]=names[tl.length-3];
+            map[tl[tl.length-4]]=names[tl.length-4];
+        }
+        
+        load(0);
     };
     function load(i) {
-        if (i > 78) {
+        if (i > tl.length-1) {
             document.getElementById("tb2").style.display = "none";
             xipai(0);
             return;
         }
         document.getElementById("tb2").innerHTML = "<span>正在加载：" + (i * 100 / 78).toFixed(1) + "%</span>";
-        let id = i;
-        if (i < 10) id = "0" + i;
         let img = new Image();
-        img.src = id + '.jpg';
+        img.src = "./tl/"+tl[i] + '.jpg';
         img.onload = function () {
             load(i + 1)
         }
@@ -88,24 +137,7 @@
         let tb = document.querySelector("#tb");
         tb.style.transform="scale(1,1)";
         tb.innerHTML = "";
-        let data = [];
-        for(let i=0;i<22;i++){
-            let key = i;
-            if (i < 10) {
-                key = "0"+key;
-            }
-            data.push("maj"+key);
-        }
-        for(let i=1;i<=14;i++){
-            let key = i;
-            if (i < 10) {
-                key = "0"+key;
-            }
-            data.push("cups"+key);
-            data.push("pents"+key);
-            data.push("swords"+key);
-            data.push("wands"+key);
-        }
+        let data = [].concat(tl);
        
         if (v == 0) {
             data.sort(function (a, b) {
@@ -113,13 +145,13 @@
             })
         }
 
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < 13; i++) {
             let tr = document.createElement("tr")
             for (let j = 0; j < 6; j++) {
                 let td = document.createElement("td");
                 td.style.verticalAlign = "middle";
                 td.style.cursor = "pointer";
-                let index = j + 1 + i * 8
+                let index = j + 1 + i *6
                 let id = index;
                 if (id < 10) id = "0" + id;
                 if (v == 0) {
@@ -129,7 +161,7 @@
                         td.style.transitionDuration = "0.3s";
                         selected.push(data[index - 1]);
                         setTimeout(() => {
-                            td.innerHTML = "<img src='./tl/" + data[index - 1] + ".jpg' style='height:66.75px;width:42.75px;border-radius:3px;' alt='" + names[parseInt(data[index - 1]) - 1] + "'>"
+                            td.innerHTML = "<img src='./tl/" + data[index - 1] + ".jpg' style='height:66.75px;width:42.75px;border-radius:3px;' alt='" + map[data[index - 1]] + "'>"
                             td.style.transform = "scale(1,1)";
                             td.style.transitionDuration = "0.3s";
                         }, 300);
@@ -148,7 +180,7 @@
                         }
                     });
                 } else {
-                    td.innerHTML = "<img src='./tl/" + data[index - 1] + ".jpg' style='height:66.75px;width:42.75px;border-radius:3px;border:1px solid #a3a3a3;' alt='" + names[parseInt(data[index - 1]) - 1] + "'><br>" + data[index - 1] + names[parseInt(data[index - 1]) - 1]
+                    td.innerHTML = "<img src='./tl/" + data[index - 1] + ".jpg' style='height:66.75px;width:42.75px;border-radius:3px;border:1px solid #a3a3a3;' alt='" + map[data[index - 1]]  + "'><br>" + map[data[index - 1]] 
                 }
 
                 td.style.textAlign = "center";
@@ -193,7 +225,7 @@
                 td.style.height = "178px";
                 td.style.width = "114px";
                 td.style.cursor = "pointer";
-                td.innerHTML = "<img src='./tl/" + data[j] + ".jpg' style='height:178px;width:114px;border-radius:6px;' alt='" + names[parseInt(data[j]) - 1] + "'><span style='color:white'>" + names[parseInt(data[j]) - 1] + "</span>"
+                td.innerHTML = "<img src='./tl/" + data[j] + ".jpg' style='height:178px;width:114px;border-radius:6px;' alt='" + map[data[j]] + "'><span style='color:white'>" +map[data[j]] + "</span>"
                 td.style.textAlign = "center";
                 tr.appendChild(td);
             }
@@ -221,7 +253,7 @@
                     td.style.height = "178px";
                     td.style.width = "114px";
                     td.style.cursor = "pointer";
-                    td.innerHTML = "<img src='./tl/" + data[index] + ".jpg' style='height:178px;width:114px;border-radius:6px;' alt='" + names[parseInt(data[index]) - 1] + "'><span style='color:white'>" + names[parseInt(data[index]) - 1] + "</span>"
+                    td.innerHTML = "<img src='./tl/" + data[index] + ".jpg' style='height:178px;width:114px;border-radius:6px;' alt='" + map[data[index]] + "'><span style='color:white'>" + map[data[index]] + "</span>"
                     td.style.textAlign = "center";
                     if (index == -1) {
                         td.innerHTML = "<div style='height:178px;width:114px'></div>"
@@ -262,7 +294,7 @@
                     td.style.height = "178px";
                     td.style.width = "114px";
                     td.style.cursor = "pointer";
-                    td.innerHTML = "<img src='./tl/" + data[index] + ".jpg' style='height:178px;width:114px;border-radius:6px;' alt='" + names[parseInt(data[index]) - 1] + "'><span style='color:white'>" + names[parseInt(data[index]) - 1] + "</span>"
+                    td.innerHTML = "<img src='./tl/" + data[index] + ".jpg' style='height:178px;width:114px;border-radius:6px;' alt='" + map[data[index]] + "'><span style='color:white'>" + map[data[index]] + "</span>"
                     td.style.textAlign = "center";
                     if (index == -1) {
                         td.innerHTML = "<div style='height:178px;width:114px'></div>"
@@ -283,7 +315,7 @@
                     td.style.height = "178px";
                     td.style.width = "114px";
                     td.style.cursor = "pointer";
-                    td.innerHTML = "<img src='./tl/" + data[index] + ".jpg' style='height:178px;width:114px;border-radius:6px;' alt='" + names[parseInt(data[index]) - 1] + "'><span style='color:white'>" + names[parseInt(data[index]) - 1] + "</span>"
+                    td.innerHTML = "<img src='./tl/" + data[index] + ".jpg' style='height:178px;width:114px;border-radius:6px;' alt='" + map[data[index]] + "'><span style='color:white'>" + map[data[index]] + "</span>"
                     td.style.textAlign = "center";
                     if (index == -1) {
                         td.innerHTML = "<div style='height:178px;width:114px'></div>"
