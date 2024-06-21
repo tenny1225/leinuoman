@@ -139,7 +139,7 @@
         tb.innerHTML = "";
         let data = [].concat(tl);
         for (let i = 0; i < data.length; i++) {
-            if (Math.random() - 0.45 < 0) {
+            if (Math.random()  - 0.4995 < 0) {
                 data[i] = "-" + data[i];
             } else {
                 data[i] = "+" + data[i];
@@ -148,7 +148,7 @@
 
         if (v == 0) {
             data.sort(function (a, b) {
-                return Math.random() - 0.45;
+                return Math.random() - 0.4995;
             })
         }
 
