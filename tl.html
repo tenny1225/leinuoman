@@ -47,8 +47,8 @@
         <table id="tb" cellpadding="4" style="color:#f1f3f5;transform-origin: 0 0;">
         </table>
         <div id="tb2" style="color:#f1f3f5">正在加载...</div>
-        <br><br>
-        <div>
+        <br>
+        <div id="tool" style="display: none;">
 
             <button onclick="ok(1)" id="ok3" class="btn">线性(3)</button>
             <button onclick="ok(2)" id="ok5" class="btn">十字(5)</button>
@@ -122,6 +122,7 @@
     function load(i) {
         if (i > tl.length - 1) {
             document.getElementById("tb2").style.display = "none";
+            document.getElementById("tool").style.display = "block";
             xipai(0);
             return;
         }
